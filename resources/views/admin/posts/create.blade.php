@@ -23,6 +23,7 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+
             <div class="form-group">
                 <label for="content">Testo</label>
                 <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="6" placeholder="Inserisci il testo dell'articolo">{{ old('content') }}</textarea>
@@ -30,6 +31,7 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+
             <div class="form-group">
                 <label for="category_id">Categoria</label>
                 <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
@@ -42,6 +44,22 @@
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
+
+            <div class="form-group">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    </div>
+                @endforeach
+                @error('tags')
+                    <div>
+                        <small class="text-danger">{{ $message }}</small>
+                    </div>
+                @enderror
+            </div>
+
             <button type="submit" class="btn btn-primary">Crea</button>
             <a href="{{ route('admin.posts.index') }}" class="btn btn-primary ml-2">Elenco post</a>
         </form>

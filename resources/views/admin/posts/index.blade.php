@@ -14,28 +14,34 @@
                     <th>Titolo</th>
                     <th>Slug</th>
                     <th>Categoria</th>
+                    <th>Tags</th>
                     <th colspan="3">Azioni</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $item)
+                @foreach ($posts as $post)
                     <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->title }}</td>
-                        <td>{{ $item->slug }}</td>
+                        <td>{{ $post->id }}</td>
+                        <td>{{ $post->title }}</td>
+                        <td>{{ $post->slug }}</td>
                         <td>
-                            @if ($item->category)
-                                {{ $item->category->name }}
+                            @if ($post->category)
+                            <h3><a href="{{ route('admin.categories.show', $post->category->id) }}" class="badge badge-info">{{ $post->category->name }}</a></h3>
                             @endif
                         </td>
                         <td>
-                            <a class="btn btn-success" href="{{ route('admin.posts.show', $item->id) }}">SHOW</a>
+                            @foreach ($post->tags as $tag)
+                            <span class="badge badge-pill badge-dark">{{ $tag->name }}</span>
+                            @endforeach
                         </td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('admin.posts.edit', $item->id) }}">EDIT</a>
+                            <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id) }}">SHOW</a>
                         </td>
                         <td>
-                            <form action="{{ route('admin.posts.destroy', $item->id) }}" method="POST" onSubmit="return confirm('Sei sicuro di voler eliminare questo articolo?')">
+                            <a class="btn btn-primary" href="{{ route('admin.posts.edit', $post->id) }}">EDIT</a>
+                        </td>
+                        <td>
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" onSubmit="return confirm('Sei sicuro di voler eliminare questo articolo?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">DELETE</button>
