@@ -3,13 +3,16 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#" class="active">Home</a>
+                    <!-- <a href="/">Home</a> -->
+                    <router-link :to="{ name: 'home'}">Home</router-link>
                 </li>
                 <li>
-                    <a href="#">Blog</a>
+                    <!-- <a href="/blog">Blog</a> -->
+                    <router-link :to="{ name: 'blog'}">Blog</router-link>
                 </li>
                 <li>
-                    <a href="#">Chi Siamo</a>
+                    <!-- <a href="/about">Chi Siamo</a> -->
+                    <router-link :to="{ name: 'about'}">Chi Siamo</router-link>
                 </li>
             </ul>
         </nav>
