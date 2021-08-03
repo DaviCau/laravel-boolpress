@@ -1,21 +1,20 @@
 <template>
-    <section class="my-5" v-if="!loading && post">
+    <!-- <section class="my-5" v-if="!loading && JSON.stringify(post) != '{}'"> -->
+    <section class="my-5" v-if="post">
         <h1>{{ post.title }}</h1>
 
         <div class="post-info my-3" v-if="post.category">
-            <h4><span class="badge badge-primary">{{ post.category.name }}</span></h4>
+            <h4><router-link :to="{ name: 'category', params: { slug: post.category.slug }}" class="badge badge-primary">{{ post.category.name }}</router-link></h4>
         </div>
         <div class="h5" v-if="post.tags.length > 0">
-            <span class="badge badge-pills badge-info mr-2" v-for="tag in post.tags" :key="`tag-${tag.id}`">
-                {{ tag.name }}
-            </span>
+            <router-link class="badge badge-pills badge-info mr-2" v-for="tag in post.tags" :key="`tag-${tag.id}`" :to="{ name: 'tag', params: { slug: tag.slug }}">{{ tag.name }}</router-link>
         </div>
 
         <p class="my-4">{{ post.content }}</p>
 
         <router-link class="btn btn-primary" :to="{ name: 'blog' }">Torna al Blog</router-link>
     </section>
-    <!-- <NotFound v-else-if="!post && loading" /> -->
+    <!-- <NotFound v-else-if="JSON.stringify(post) == '{}' && !loading" /> -->
     <Loader v-else />
 </template>
 
@@ -32,20 +31,23 @@ export default {
     data: function() {
         return {
             post: null,
-            loading: true
         }
     },
     created: function() {
-        this.getPost(this.$route.params.slug);
+        this.getPost();
     },
     methods: {
         getPost: function(slug) {
             axios
-                .get(`http://127.0.0.1:8000/api/posts/${slug}`)
+                .get(`http://127.0.0.1:8000/api/posts/${this.$route.params.slug}`)
                 .then(
                     res => {
-                        this.post = res.data;
-                        this.loading = false;
+                        if (JSON.stringify(res.data) == '{}') {
+                            this.$router.push({ name: 'not-found' })
+                        } else {
+                            this.post = res.data;
+                            this.loading = false;
+                        }
                     }
                 )
                 .catch(
