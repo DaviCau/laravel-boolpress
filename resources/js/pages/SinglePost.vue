@@ -10,6 +10,8 @@
             <router-link class="badge badge-pills badge-info mr-2" v-for="tag in post.tags" :key="`tag-${tag.id}`" :to="{ name: 'tag', params: { slug: tag.slug }}">{{ tag.name }}</router-link>
         </div>
 
+        <img class="img-fluid" :src="post.cover" :alt="post.title">
+
         <p class="my-4">{{ post.content }}</p>
 
         <router-link class="btn btn-primary" :to="{ name: 'blog' }">Torna al Blog</router-link>
