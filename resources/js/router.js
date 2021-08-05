@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 import Category from './pages/Category';
 import Tag from './pages/Tag';
 import Categories from './pages/Categories';
+import Contact from './pages/Contact';
 
 const router = new VueRouter({
     mode: 'history',
@@ -30,6 +31,11 @@ const router = new VueRouter({
             path: '/blog',
             name: 'blog',
             component: Blog
+        },
+        {
+            path: '/contact-us',
+            name: 'contact-us',
+            component: Contact
         },
         {
             path: '/blog/categories',

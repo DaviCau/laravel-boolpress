@@ -14,6 +14,9 @@
                     <!-- <a href="/about">Chi Siamo</a> -->
                     <router-link :to="{ name: 'about'}">Chi Siamo</router-link>
                 </li>
+                <li>
+                    <router-link :to="{ name: 'contact-us'}">Contattaci</router-link>
+                </li>
             </ul>
         </nav>
     </header>

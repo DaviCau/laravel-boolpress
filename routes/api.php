@@ -23,4 +23,6 @@ Route::namespace('Api')
         Route::get('tags/{slug}', 'TagController@show');
         Route::get('categories', 'CategoryController@index');
 
+        Route::post('leads', 'LeedController@store');
+
     });
